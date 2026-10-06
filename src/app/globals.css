@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Caleb Animal Care — design tokens
+   Extracted from design source: petsitting-master.zip (Colorlib "Pet Sitting")
+   scss/style.scss ($primary #00bd56, $secondary #207dff, Montserrat, 15px/1.8)
+   ========================================================================== */
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-800-normal.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* palette (zip: scss/style.scss) */
+  --pine: #00bd56;          /* $primary   */
+  --pine-deep: #00a348;     /* $primary hover */
+  --azure: #207dff;         /* $secondary */
+  --navy: #00043c;          /* $darken    */
+  --body: #808080;          /* body text: lighten(#000,50%) */
+  --heading: rgba(0, 0, 0, 0.8);
+  --mist: #fafafa;          /* .bg-light  */
+  --fog: #f0f0f0;           /* icon circles */
+  --line: #e6e6e6;
+  --footer-bg: #1a1a1a;     /* .footer    */
+  --grad: linear-gradient(45deg, #207dff 0%, #00bd55 100%);
+
+  /* brief tokens (absent from zip — fallbacks in brand family) */
+  --emergency: #d64545;     /* warm red emergency strip / pill */
+  --emergency-deep: #bf3535;
+  --wa: #25d366;            /* WhatsApp   */
+
+  /* shadows & radius (zip: .services, navbar, #ftco-loader) */
+  --shadow-card: 0px 8px 21px -10px rgba(0, 0, 0, 0.08);
+  --shadow-nav: 0px 5px 20px -17px rgba(0, 0, 0, 0.34);
+  --shadow-lift: 0px 22px 44px -18px rgba(0, 0, 0, 0.25);
+  --shadow-loader: 0px 24px 64px rgba(0, 0, 0, 0.24);
+  --radius: 4px;
+
+  --font-sans: "Montserrat", Arial, sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-body font-sans antialiased;
+    font-size: 15px; /* zip body base — meets brief minimum */
+    line-height: 1.8; /* zip line-height */
+    font-weight: 400;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--heading);
+    line-height: 1.5;
+    text-wrap: balance; /* natural heading wrap at all breakpoints */
+  }
+  a {
+    transition: all 0.3s ease; /* zip: a { transition: .3s all ease } */
+  }
+  ::selection {
+    background: var(--pine);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Zip `.btn` system: 12px buttons (brief), radius 4px, .3s ease, min 48px touch */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-brand px-6 py-3 text-center text-[12px] font-bold uppercase tracking-[1.5px] transition-all duration-300 ease-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-pine focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn border border-pine bg-pine text-white hover:border-pine-deep hover:bg-pine-deep;
+  }
+  .btn-outline {
+    @apply btn border border-pine bg-transparent text-pine hover:bg-pine hover:text-white;
+  }
+  .btn-white {
+    @apply btn border border-white bg-white text-heading hover:bg-transparent hover:text-white;
+  }
+  .btn-emergency {
+    @apply btn border border-emergency bg-emergency text-white hover:border-emergency-deep hover:bg-emergency-deep;
+  }
+
+  .field {
+    @apply w-full rounded-brand border border-line bg-white px-4 py-3 text-[15px] font-medium text-heading placeholder:text-[13px] placeholder:text-body/70 focus:border-pine focus:outline-none focus:ring-2 focus:ring-pine/25;
+  }
+  .field-label {
+    @apply mb-1.5 block text-[12px] font-bold uppercase tracking-[1.2px] text-heading;
+  }
+
+  /* Zip `.heading-section .subheading` */
+  .subheading {
+    @apply mb-2 block text-[12px] font-bold uppercase tracking-[2px] text-pine;
+  }
+
+  .meta {
+    @apply text-[11px] uppercase tracking-[1px] text-body;
+  }
+
+  .card-service {
+    @apply rounded-brand bg-white shadow-card transition-all duration-[250ms] ease-brand hover:shadow-lift;
+  }
+}
+
+/* Vaccination overdue badge — soft pulse (disabled under reduced motion) */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(214, 69, 69, 0.45); }
+  50% { box-shadow: 0 0 0 7px rgba(214, 69, 69, 0); }
+}
+.badge-overdue {
+  animation: badge-pulse 2.2s ease-in-out infinite;
+}
+
+/* Cookie banner + drawers ease per zip transition token */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .badge-overdue { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
