@@ -4,7 +4,7 @@
   "private": true,
   "description": "Caleb Animal Care — Nairobi veterinary clinic: pets, livestock, wildlife. Appointments, home visits, pet wellness portal, library and shop.",
   "engines": {
-    "node": "20.11.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev",
